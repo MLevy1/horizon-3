@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Horizon · Planetary Sandbox</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="world.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="mark" aria-hidden="true">◒</span> HORIZON</div>
+    <nav class="row" aria-label="Project">
+      <span id="world-id"></span>
+      <a href="horizon-outline-editor.html">Roadmap outline</a>
+    </nav>
+  </header>
+  <main>
+    <div class="intro">
+      <div>
+        <h1>Planetary Sandbox</h1>
+        <p>Generate a planet, survey its terrain, and build in a pilot watershed.</p>
+      </div>
+      <form id="generate">
+        <label for="seed">World seed</label>
+        <div class="row">
+          <input id="seed" name="seed" value="Horizon" required maxlength="160">
+          <button class="primary">Generate</button>
+        </div>
+        <details class="settings">
+          <summary>Planet settings</summary>
+          <label for="settings">Settings JSON</label>
+          <textarea id="settings" rows="8" spellcheck="false"></textarea>
+        </details>
+      </form>
+    </div>
+
+    <div class="layout">
+      <section class="panel viewer" aria-label="World viewer">
+        <div class="toolbar">
+          <div class="row" role="group" aria-label="View">
+            <button id="atlas" aria-pressed="true">Atlas</button>
+            <button id="explorer" aria-pressed="false">Explorer</button>
+          </div>
+          <div class="row" id="atlas-controls" role="group" aria-label="Map scale">
+            <button id="planet" aria-pressed="true">Planet</button>
+            <button id="pilot" aria-pressed="false">Pilot region</button>
+          </div>
+          <div class="row" id="explorer-controls" role="group" aria-label="Camera" hidden>
+            <button id="left" aria-label="Orbit left">↶</button>
+            <button id="right" aria-label="Orbit right">↷</button>
+            <button id="closer" aria-label="Zoom in">+</button>
+            <button id="farther" aria-label="Zoom out">−</button>
+          </div>
+        </div>
+        <div class="viewport">
+          <canvas id="scene" width="960" height="480" aria-label="Interactive terrain view"></canvas>
+        </div>
+        <div class="view-footer">
+          <span id="view-note"></span>
+          <div class="legend" aria-label="Map legend">
+            <span><i class="water"></i>Water</span>
+            <span><i class="low"></i>Lowlands</span>
+            <span><i class="high"></i>Highlands</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <section class="panel card">
+          <h2>Geographic probe</h2>
+          <form id="probe" class="probe">
+            <label>Longitude<input id="lon" type="number" step="any" required></label>
+            <label>Latitude<input id="lat" type="number" step="any" min="-90" max="90" required></label>
+            <button aria-label="Apply coordinates">Go</button>
+          </form>
+          <dl id="sample"></dl>
+        </section>
+        <section class="panel card">
+          <h2>Player structure</h2>
+          <p id="structure"></p>
+          <button id="place" class="primary full">Place cube at probe</button>
+          <div class="row save-controls">
+            <button id="export">Export JSON</button>
+            <button id="import">Import JSON</button>
+            <input id="overlay-file" type="file" accept=".json,application/json" hidden>
+          </div>
+        </section>
+        <p id="status" class="status" role="status"></p>
+      </aside>
+    </div>
+    <details class="diagnostics">
+      <summary>Model diagnostics</summary>
+      <dl id="diagnostics"></dl>
+    </details>
+  </main>
+</body>
+</html>
